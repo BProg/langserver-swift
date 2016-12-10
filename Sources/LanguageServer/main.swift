@@ -11,6 +11,7 @@ let main = OperationQueue.main
 let stdin = FileHandle.standardInput
 var iterator = RequestIterator(Data())
 stdin.waitForDataInBackgroundAndNotify()
+var index = 0
 
 // When new data is available
 var dataAvailable : NSObjectProtocol!
@@ -24,6 +25,13 @@ dataAvailable = NotificationCenter.default.addObserver(forName: .NSFileHandleDat
     iterator.append(buffer)
 
     let requests = AnySequence<Data>() { iterator }
+
+    let home = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+    let desktop = URL(fileURLWithPath: "Desktop", isDirectory: true, relativeTo: home)
+    let logs = URL(fileURLWithPath: "logs", isDirectory: true, relativeTo: desktop)
+    let log = URL(fileURLWithPath: "buffer-\(index).txt", relativeTo: logs)
+    try! buffer.write(to: log)
+    index += 1
 
     for requestBuffer in requests {
         let str = String(data: buffer, encoding: .utf8) ?? "Expected UTF-8 encoding."
