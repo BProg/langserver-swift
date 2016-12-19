@@ -4,7 +4,8 @@ let package = Package(
     name: "langserver-swift",
     targets: [
         Target(name: "JSONRPC"),
-        Target(name: "LanguageServerProtocol", dependencies: ["JSONRPC"]),
+        Target(name: "YamlConvertable"),
+        Target(name: "LanguageServerProtocol", dependencies: ["YamlConvertable", "JSONRPC"]),
         Target(name: "LanguageServer", dependencies: ["LanguageServerProtocol", "JSONRPC"])
     ],
     dependencies: [
