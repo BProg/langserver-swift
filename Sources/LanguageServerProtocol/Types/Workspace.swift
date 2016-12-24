@@ -100,7 +100,7 @@ public struct Workspace {
     /// added to the `index`.
     ///
     /// - Parameter document: Information about which `TextDocument` was opened by the client.
-    public mutating func open(byClient document: DidOpenTextDocumentParams) {
+    public mutating func client(opened document: DidOpenTextDocumentParams) {
         let url = document.textDocument.uri
         if var module = modules.lazy.first(where: { $0.root.isParent(of: url) }) {
             module.sources[url] = document.textDocument
@@ -115,7 +115,7 @@ public struct Workspace {
     ///
     /// - Parameter document: Information about which `TextDocument` was modified by the client.
     /// - Throws: `WorkspaceError.notFound` if it cannot find the `TextDocument` in the `Workspace` `index`.
-    public mutating func update(byClient document: DidChangeTextDocumentParams) throws {
+    public mutating func client(modified document: DidChangeTextDocumentParams) throws {
         guard let changes = document.contentChanges.first else { return }
         let url = document.textDocument.uri
         var (module, source) = try getSource(url)
@@ -128,7 +128,7 @@ public struct Workspace {
     /// about the `TextDocument` from the file system.
     ///
     /// - Parameter document: Information about which `TextDocument` was closed by the client.
-    public mutating func close(byClient document: DidCloseTextDocumentParams) {
+    public mutating func client(closed document: DidCloseTextDocumentParams) {
         let url = document.textDocument.uri
         let document = TextDocument(url)
         if var module = modules.lazy.first(where: { $0.root.isParent(of: url) }) {
