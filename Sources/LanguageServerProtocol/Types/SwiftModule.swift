@@ -19,12 +19,12 @@ struct SwiftModule {
 
     let name: String
 
-    let sources: [URL : TextDocument]
+    var sources: [URL : TextDocument]
 
     let otherArguments: [String]
 
     var arguments: [String] {
-        return sources.map({ $0.key.path }) + otherArguments
+        return sources.keys.map({ $0.path }) + otherArguments
     }
 
     /// Create a false module that is just a collection of source files in a directory. Ideally
@@ -37,7 +37,7 @@ struct SwiftModule {
             .filter({ $0.isFileURL && $0.isFile })
             .filter({ $0.pathExtension.lowercased() == "swift" }) // Check if file is a Swift source file (e.g., has `.swift` extension)
             .flatMap(TextDocument.init)
-            .map({ (key: $0.file, value: $0) })
+            .map({ (key: $0.uri, value: $0) })
         sources = Dictionary(s)
         otherArguments = []
     }
@@ -52,8 +52,36 @@ struct SwiftModule {
         name = moduleName
         sources = Dictionary(locations
             .flatMap(TextDocument.init)
-            .map({ (key: $0.file, value: $0) }))
+            .map({ (key: $0.uri, value: $0) }))
         otherArguments = arguments
+    }
+
+    var root: URL {
+        return commonRoot(sources.keys)
+    }
+
+}
+
+extension SwiftModule : Hashable {
+
+    var hashValue: Int {
+        return name.hashValue
+    }
+
+}
+
+extension SwiftModule : Equatable {
+
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    static func ==(lhs: SwiftModule, rhs: SwiftModule) -> Bool {
+        return lhs.name == rhs.name
     }
 
 }
