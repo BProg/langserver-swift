@@ -5,7 +5,7 @@
       "package": "Argo",
       "reason": null,
       "repositoryURL": "https://github.com/RLovelett/Argo.git",
-      "version": "4.1.2-beta.2"
+      "version": "4.1.2-beta.3"
     },
     {
       "package": "Clang_C",
@@ -29,7 +29,7 @@
       "package": "Ogra",
       "reason": null,
       "repositoryURL": "https://github.com/RLovelett/Ogra.git",
-      "version": "4.1.1-beta.1"
+      "version": "4.1.2-beta.1"
     },
     {
       "package": "Result",
@@ -59,13 +59,13 @@
       "package": "SourceKitten",
       "reason": null,
       "repositoryURL": "https://github.com/RLovelett/SourceKitten.git",
-      "version": "0.15.4-beta.1"
+      "version": "0.18.0-beta.1"
     },
     {
       "package": "Yams",
       "reason": null,
-      "repositoryURL": "https://github.com/RLovelett/Yams.git",
-      "version": "0.1.5-beta.1"
+      "repositoryURL": "https://github.com/jpsim/Yams.git",
+      "version": "0.1.4"
     }
   ],
   "version": 1

@@ -148,7 +148,7 @@ public struct Workspace {
         // SourceKit may send back JSON that is an empty object. This is _not_ an error condition.
         // So we have to seperate SourceKit throwing an error from SourceKit sending back a
         // "malformed" Cursor structure.
-        let json: Any = try Request.cursorInfo(file: at.textDocument.uri.path, offset: offset, arguments: module.arguments).failableSend()
+        let json: Any = try Request.cursorInfo(file: url.path, offset: offset, arguments: module.arguments).sendAndReceiveJSON()
 
         return Cursor.decode(JSON(json)).value
     }
