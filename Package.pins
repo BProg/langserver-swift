@@ -4,8 +4,8 @@
     {
       "package": "Argo",
       "reason": null,
-      "repositoryURL": "https://github.com/RLovelett/Argo.git",
-      "version": "4.1.2-beta.3"
+      "repositoryURL": "https://github.com/thoughtbot/Argo.git",
+      "version": "4.1.2"
     },
     {
       "package": "Clang_C",
@@ -28,8 +28,8 @@
     {
       "package": "Ogra",
       "reason": null,
-      "repositoryURL": "https://github.com/RLovelett/Ogra.git",
-      "version": "4.1.2-beta.1"
+      "repositoryURL": "https://github.com/edwardaux/Ogra.git",
+      "version": "4.1.1"
     },
     {
       "package": "Result",
