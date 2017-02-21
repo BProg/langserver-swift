@@ -19,7 +19,11 @@ private let log = OSLog(subsystem: "me.lovelett.langserver-swift", category: "Re
 
 public struct Response {
 
-    let json: JSON
+    var json: JSON
+
+    public init() {
+        json = .null
+    }
 
     public init(to request: Request, is message: Encodable) {
         switch request {

@@ -31,7 +31,7 @@ struct MultibyteDataIterator {
 extension MultibyteDataIterator : IteratorProtocol {
 
     mutating func next() -> Data? {
-        guard !data.isEmpty else { return nil }
+        if data.isEmpty { return nil }
         let separatorRange = data.range(of: separator) ?? (data.endIndex..<data.endIndex)
         let extractedData = data.subdata(in: data.startIndex..<separatorRange.lowerBound)
         let distance = calculateNewIndex(extractedData) ?? 0

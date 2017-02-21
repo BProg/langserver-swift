@@ -11,7 +11,7 @@ import BaseProtocol
 import Foundation
 import LanguageServerProtocol
 
-var workspace: Workspace!
+var workspace: Workspace?
 var exitCode: Int32 = 1
 
 func handle(_ request: Request) -> Response {
@@ -20,6 +20,7 @@ func handle(_ request: Request) -> Response {
         case "initialize":
             let parameters: InitializeParams = try request.parse()
             workspace = Workspace(parameters)
+            guard let workspace = workspace else { return Response() }
             let response = Response(to: request, is: InitializeResult(workspace.capabilities))
             return response
         case "workspace/didChangeWatchedFiles":
@@ -28,30 +29,33 @@ func handle(_ request: Request) -> Response {
             return Response(to: request, is: JSON.null)
         case "textDocument/didChange":
             let document: DidChangeTextDocumentParams = try request.parse()
-            try workspace.client(modified: document)
+            try workspace?.client(modified: document)
             return Response(to: request, is: JSON.null)
         case "textDocument/didClose":
             let document: DidCloseTextDocumentParams = try request.parse()
-            workspace.client(closed: document)
+            workspace?.client(closed: document)
             return Response(to: request, is: JSON.null)
         case "textDocument/didOpen":
             let document: DidOpenTextDocumentParams = try request.parse()
-            workspace.client(opened: document)
+            workspace?.client(opened: document)
             return Response(to: request, is: JSON.null)
 //        case "textDocument/didSave":
 //            fatalError("\(request.method) is not implemented yet.")
         case "textDocument/completion":
             let parameters: TextDocumentPositionParams = try request.parse()
+            guard let workspace = workspace else { return Response() }
             let items = try workspace.complete(forText: parameters)
             let response = Response(to: request, is: items)
             return response
         case "textDocument/definition":
             let parameters: TextDocumentPositionParams = try request.parse()
+            guard let workspace = workspace else { return Response() }
             let location = try workspace.findDeclaration(forText: parameters)
             let response = Response(to: request, is: location)
             return response
         case "textDocument/hover":
             let parameters: TextDocumentPositionParams = try request.parse()
+            guard let workspace = workspace else { return Response() }
             let hover = try workspace.cursor(forText: parameters)
             let response = Response(to: request, is: hover)
             return response

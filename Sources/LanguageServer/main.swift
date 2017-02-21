@@ -13,11 +13,10 @@ var requests = RequestBuffer()
 stdin.waitForDataInBackgroundAndNotify()
 
 // When new data is available
-var dataAvailable : NSObjectProtocol!
+var dataAvailable : NSObjectProtocol?
 dataAvailable = NotificationCenter.default.addObserver(forName: .NSFileHandleDataAvailable, object: stdin, queue: main) { (notification) -> Void in
     let buffer = stdin.availableData
-
-    guard !buffer.isEmpty else {
+    if buffer.isEmpty {
         return stdin.waitForDataInBackgroundAndNotify()
     }
 
