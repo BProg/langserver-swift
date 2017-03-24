@@ -19,7 +19,7 @@ private let log = OSLog(subsystem: "me.lovelett.langserver-swift", category: "Re
 
 public struct Response {
 
-    var json: JSON
+    let json: JSON
 
     public init() {
         json = .null
